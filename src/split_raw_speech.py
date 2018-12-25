@@ -2,10 +2,16 @@
 # If you are downloading the preprocessed dataset from the google drive, you do not need to use this.
 # This code is for splliting original audio files into smaller pieces for training stage.
 #############################################
+import os
+import numpy as np
+import librosa
 
-def split_file(filename, output_dir):
+#hand crafted pooling window size
+N_POOL = 10400 
+
+def split_file(filepath, output_dir):
     
-    data, fs = librosa.load(filename, sr=16000, mono=True, dtype=np.float64)
+    data, fs = librosa.load(filepath, sr=16000, mono=True, dtype=np.float64)
     
     # get the absolute size of the signal
     # then smooth (ave pool) the signal 
@@ -39,20 +45,20 @@ def split_file(filename, output_dir):
         start = sound_start[i]
         end   = sound_end[i]
         tmp   = data[start*N_POOL:end*N_POOL]
-        sub_dir = 'train_convert' if i<len(sound_end)/3 else 'train_verification' if i<len(sound_end)/3*2 else 'test'
-        if not os.path.exists('{}/{}'.format(output_dir,sub_dir)):
-            os.makedirs('{}/{}'.format(output_dir,sub_dir))
-        librosa.output.write_wav('{}/{}/{}_{}.wav'.format(output_dir,sub_dir,filename.split('.')[0] ,i), tmp, fs)
+        sub_dir = 'train_conversion' if i<len(sound_end)/3 else 'train_verification' if i<len(sound_end)/3*2 else 'test'
+        if not os.path.exists(os.path.join(output_dir,sub_dir)):
+            os.makedirs(os.path.join(output_dir,sub_dir))
+        out_path = os.path.join(output_dir,sub_dir,filepath.split('/')[-1].replace('.','_{}.'.format(i)))
+        librosa.output.write_wav(out_path, tmp, fs)
     
 
-# for the case of splitting omaba_original_1.wav ~ omaba_original_4.wav
-
-filenames = [
-    'filepath/obama_original_1.wav',
-    'filepath/obama_original_2.wav',
-    'filepath/obama_original_3.wav',
-    'filepath/obama_original_4.wav'
-]
-
-for filename in filenames:
-    split_file(filename, output_dir='./data/obama')
+if __name__ == '__main__':
+    
+    target_dir = './data/target_raw/' 
+    output_dir ='./data/target/'
+    
+    filepathes = [os.path.join(target_dir,filename) for filename in os.listdir(target_dir)] 
+    
+    for filepath in filepathes:
+        split_file(filepath, output_dir='./data/target')
+        

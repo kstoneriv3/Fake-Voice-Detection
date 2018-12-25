@@ -4,9 +4,50 @@ Kei Ishikawa
 
 ## Introduction
 
+
+## Files
+
+```
+.
+├──src
+│   ├── convert.py
+│   ├── download.py
+│   ├── model.py
+│   ├── module.py
+│   ├── preprocess.py
+│   ├── train.py
+│   └── utils.py
+│
+├──data
+│   ├──target (Obama)
+│   │   ├─ train_conversion
+│   │   ├─ train_verification
+│   │   └─ test
+│   ├──source
+│   │   └─ train_conversion
+│   └──ubg
+│       ├─ train_verification
+│       └─ test
+├── figures
+├── README.md
+```
+
+
 ## Usage
 
-### Download Dataset
+### Before Running Code
+```bash
+$ cd path/Fake-Voice-Detection/
+```
 
-Download and unzip the datasets listed below.
-* Speech of Barack Obama ([google drive](https://drive.google.com/drive/u/0/folders/1OR7EL8RMlxk9_5f6gWZ_nKiQ2zWZaVTX))
+### Download Dataset
+Download and unzip datasets and pretrained models.
+
+```bash
+$ python ./src/download.py
+```
+
+### Split the raw speech
+```bash
+$ python ./src/split_raw_speech.py
+```
