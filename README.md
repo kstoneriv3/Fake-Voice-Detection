@@ -1,6 +1,7 @@
-# Fake-Voice_Detection
+# Fake-Voice-Detection
 
-Kei Ishikawa
+Author: Kei Ishikawa, Xiaoran Chen, Ching Pui WAN, Allan Costa
+[Cyclic GAN code](https://github.com/leimao/Voice_Converter_CycleGAN) is by Lei Mao
 
 ## Introduction
 
@@ -19,6 +20,7 @@ Kei Ishikawa
 │   └── utils.py
 │
 ├──data
+│   ├──target_raw (Obama)
 │   ├──target (Obama)
 │   │   ├─ train_conversion
 │   │   ├─ train_verification
@@ -26,8 +28,9 @@ Kei Ishikawa
 │   ├──source
 │   │   └─ train_conversion
 │   └──ubg
-│       ├─ train_verification
-│       └─ test
+│   │   ├─ train_conversion
+│   │   ├─ train_verification
+│   │   └─ test
 ├── figures
 ├── README.md
 ```
