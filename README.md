@@ -1,7 +1,9 @@
 # Fake-Voice-Detection
 
-Author: Kei Ishikawa, Xiaoran Chen, Ching Pui WAN, Allan Costa
-[Cyclic GAN code](https://github.com/leimao/Voice_Converter_CycleGAN) is by Lei Mao
+Author: Kei Ishikawa, Xiaoran Chen, Ching Pui WAN, Allan Costa. 
+The original code for [Cyclic GAN](https://github.com/leimao/Voice_Converter_CycleGAN) is by Lei Mao.<br>
+
+Environment: ubuntu 18.04, Python 3.6
 
 ## Introduction
 
