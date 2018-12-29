@@ -11,7 +11,7 @@ def train(train_A_dir, train_B_dir, model_dir, model_name, random_seed, validati
 
     np.random.seed(random_seed)
 
-    num_epochs = 1000
+    num_epochs = 20000
     mini_batch_size = 1 # mini_batch_size = 1 is better
     generator_learning_rate = 0.0002
     generator_learning_rate_decay = generator_learning_rate / 200000

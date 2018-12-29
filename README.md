@@ -38,6 +38,17 @@ Environment: ubuntu 18.04, Python 3.6
 ```
 
 
+## Requirments
+Install all the requirements.
+
+```bash
+pip install --user -r requirements.txt
+```
+If librosa gives backend error, run following. (This is moduole load ffmpeg in HPC cluster in ETH.)
+```bash
+sudo apt-get ffmpeg
+```
+
 ## Usage
 
 ### Before Running Code

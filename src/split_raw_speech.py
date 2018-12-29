@@ -9,7 +9,7 @@ import librosa
 #hand crafted pooling window size
 N_POOL = 10400 
 
-def split_file(filepath, output_dir):
+def split_file(filepath, output_dir, is_ver):
     
     data, fs = librosa.load(filepath, sr=16000, mono=True, dtype=np.float64)
     
@@ -45,7 +45,7 @@ def split_file(filepath, output_dir):
         start = sound_start[i]
         end   = sound_end[i]
         tmp   = data[start*N_POOL:end*N_POOL]
-        sub_dir = 'train_conversion' if i<len(sound_end)/3 else 'train_verification' if i<len(sound_end)/3*2 else 'test'
+        sub_dir = 'train_conversion' if is_ver==True else 'train_verification' if i<len(sound_end)/2 else 'test'
         if not os.path.exists(os.path.join(output_dir,sub_dir)):
             os.makedirs(os.path.join(output_dir,sub_dir))
         out_path = os.path.join(output_dir,sub_dir,filepath.split('/')[-1].replace('.','_{}.'.format(i)))
@@ -59,6 +59,8 @@ if __name__ == '__main__':
     
     filepathes = [os.path.join(target_dir,filename) for filename in os.listdir(target_dir)] 
     
+    split_file(filepathes[0], output_dir='./data/target', is_ver=True)
+        
     for filepath in filepathes:
-        split_file(filepath, output_dir='./data/target')
+        split_file(filepath, output_dir='./data/target', is_ver=False)
         
