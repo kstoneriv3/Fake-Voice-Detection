@@ -56,6 +56,7 @@ if __name__ == '__main__':
     filepathes = [os.path.join(target_dir,filename) for filename in os.listdir(target_dir)] 
     filepathes.sort()
     
+    print('splitting raw speech data ...')
     split_file(filepathes[0], output_dir='./data/target/train_conversion')
         
     for filepath in filepathes[1:4]:
@@ -63,4 +64,4 @@ if __name__ == '__main__':
         
     for filepath in filepathes[4:7]:
         split_file(filepath, output_dir='./data/target/test')
-        
+    print('is finished.')

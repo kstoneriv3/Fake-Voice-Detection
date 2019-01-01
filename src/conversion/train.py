@@ -212,8 +212,8 @@ if __name__ == '__main__':
     model_name = argv.model_name+'.ckpt'
     
     if os.path.exists(model_dir):
-        raise Error('model directory alreaddy exists!\nif you want to train another model, try another model directory.')
-    os.mkdir(model_dir)
+        raise Exception('model directory "{}" alreaddy exists!\nif you want to train another model, try another model directory.'.format(model_dir))
+    os.makedirs(model_dir)
     
     train_A_dir = './data/target/train_conversion'
     train_B_dir = './data/source/train_conversion'

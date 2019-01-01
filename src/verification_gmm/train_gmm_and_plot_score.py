@@ -19,8 +19,8 @@ def load_wavs_as_matrices(data_dir):
 def load_datasets():
     # load training data and test data 
     train_data_dirs = {
-        'Verif_disjoint':'/home/kei/Desktop/DL/Fake-Voice-Detection/data/target/train_verification/',
-        'ubg'           :'/home/kei/Desktop/DL/Fake-Voice-Detection/data/ubg/train_verification/'
+        'Verif_disjoint':'./data/target/train_verification/',
+        'ubg'           :'./data/ubg/train_verification/'
     }
 
     train_data = {}
@@ -28,10 +28,10 @@ def load_datasets():
         train_data[name] = load_wavs_as_matrices(data_dir)
     
     test_data_dirs = {
-        'train_Conv' :'/home/kei/Desktop/DL/Fake-Voice-Detection/data/target/train_conversion/',
-        'test'       :'/home/kei/Desktop/DL/Fake-Voice-Detection/data/target/test/',
-        'ubg_test'   :'/home/kei/Desktop/DL/Fake-Voice-Detection/data/ubg/test/',
-        'fake'       :'/home/kei/Desktop/DL/Fake-Voice-Detection/data/fake'
+        'train_Conv' :'./data/target/train_conversion/',
+        'test'       :'./data/target/test/',
+        'ubg_test'   :'./data/ubg/test/',
+        'fake'       :'./data/fake'
     }
 
     test_data = {}
