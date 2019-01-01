@@ -2,6 +2,7 @@ import os
 import numpy as np
 import time
 import librosa
+import argparse
 
 from preprocess import *
 from model import CycleGAN
@@ -11,7 +12,7 @@ def train(train_A_dir, train_B_dir, model_dir, model_name, random_seed, validati
 
     np.random.seed(random_seed)
 
-    num_epochs = 20000
+    num_epochs = 101
     mini_batch_size = 1 # mini_batch_size = 1 is better
     generator_learning_rate = 0.0002
     generator_learning_rate_decay = generator_learning_rate / 200000
@@ -63,13 +64,13 @@ def train(train_A_dir, train_B_dir, model_dir, model_name, random_seed, validati
 
     if validation_A_dir is not None:
         validation_A_output_dir = os.path.join(output_dir, 'converted_A')
-        if not os.path.exists(validation_A_output_dir):
-            os.makedirs(validation_A_output_dir)
+        #if not os.path.exists(validation_A_output_dir):
+        #    os.makedirs(validation_A_output_dir)
 
     if validation_B_dir is not None:
         validation_B_output_dir = os.path.join(output_dir, 'converted_B')
-        if not os.path.exists(validation_B_output_dir):
-            os.makedirs(validation_B_output_dir)
+        #if not os.path.exists(validation_B_output_dir):
+        #    os.makedirs(validation_B_output_dir)
 
     end_time = time.time()
     time_elapsed = end_time - start_time
@@ -190,21 +191,39 @@ def train(train_A_dir, train_B_dir, model_dir, model_name, random_seed, validati
                                                           os.path.basename(file)), wav_transformed, sampling_rate)
                     
         if epoch % 100 == 0:
-            if not os.path.exists( model_dir+"_{}epc".format(epoch) ):
-                os.makedirs( model_dir+"_{}epc".format(epoch) )
-            model.save(directory = model_dir+"_{}epc".format(epoch), filename = model_name)
+            #if not os.path.exists( model_dir+"_{}epc".format(epoch) ):
+            #    os.makedirs( model_dir+"_{}epc".format(epoch) )
+            model.save(directory = model_dir, filename = model_name)
 
 
 if __name__ == '__main__':
 
+    parser = argparse.ArgumentParser(description = 'Convert voices using pre-trained CycleGAN model.')
+
+    model_dir_default = './model/conversion/pretrained'
+    model_name_default = 'pretrained'
+
+    parser.add_argument('--model_dir', type = str, help = 'Directory for the pre-trained model.', default = model_dir_default)
+    parser.add_argument('--model_name', type = str, help = 'Filename for the pre-trained model.', default = model_name_default)
+
+    argv = parser.parse_args()
+
+    model_dir = argv.model_dir
+    model_name = argv.model_name+'.ckpt'
+    
+    if os.path.exists(model_dir):
+        raise Error('model directory alreaddy exists!\nif you want to train another model, try another model directory.')
+    os.mkdir(model_dir)
+    
     train_A_dir = './data/target/train_conversion'
     train_B_dir = './data/source/train_conversion'
-    model_dir = './model/ob_tm1'
-    model_name = 'ob_tm1.ckpt'
     random_seed = 0
     validation_A_dir = train_A_dir
     validation_B_dir = train_B_dir
-    output_dir = './model/ob_tm1/validation_output'
+    output_dir = os.path.join(model_dir,'./validation_output')
     tensorboard_log_dir = './log'
 
-    train(train_A_dir = train_A_dir, train_B_dir = train_B_dir, model_dir = model_dir, model_name = model_name, random_seed = random_seed, validation_A_dir = validation_A_dir, validation_B_dir = validation_B_dir, output_dir = output_dir, tensorboard_log_dir = tensorboard_log_dir)
+    train(train_A_dir = train_A_dir, train_B_dir = train_B_dir, 
+          model_dir = model_dir, model_name = model_name, random_seed = random_seed, 
+          validation_A_dir = validation_A_dir, validation_B_dir = validation_B_dir, 
+          output_dir = output_dir, tensorboard_log_dir = tensorboard_log_dir)

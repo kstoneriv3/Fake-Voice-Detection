@@ -1,6 +1,6 @@
 # Fake-Voice-Detection
 
-Author: Kei Ishikawa, Xiaoran Chen, Ching Pui WAN, Allan Costa. 
+Author: Jingqiu Ding, Kei Ishikawa, Xiaoran Chen. 
 The original code for [Cyclic GAN](https://github.com/leimao/Voice_Converter_CycleGAN) is by Lei Mao.<br>
 
 Environment: ubuntu 18.04, Python 3.6
@@ -44,7 +44,7 @@ Install all the requirements.
 ```bash
 pip install --user -r requirements.txt
 ```
-If librosa gives backend error, run following. (This is moduole load ffmpeg in HPC cluster in ETH.)
+If librosa gives backend error, run following. (This is `module load ffmpeg` in HPC cluster in ETH.)
 ```bash
 sudo apt-get ffmpeg
 ```

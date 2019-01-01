@@ -1,0 +1,13 @@
+*.wav
+*.zip
+*.ipynb
+*.ipynb_checkpoints
+*.Rhistory
+__pycache__/
+model/
+log/
+data/
+data_manual/
+tmp/
+out/
+
