@@ -12,7 +12,7 @@ def train(train_A_dir, train_B_dir, model_dir, model_name, random_seed, validati
 
     np.random.seed(random_seed)
 
-    num_epochs = 101
+    num_epochs = 1501
     mini_batch_size = 1 # mini_batch_size = 1 is better
     generator_learning_rate = 0.0002
     generator_learning_rate_decay = generator_learning_rate / 200000
@@ -212,7 +212,8 @@ if __name__ == '__main__':
     model_name = argv.model_name+'.ckpt'
     
     if os.path.exists(model_dir):
-        raise Exception('model directory "{}" alreaddy exists!\nif you want to train another model, try another model directory.'.format(model_dir))
+        print('model directory "{}" alreaddy exists!\nif you want to train another model, try another model directory.'.format(model_dir))
+        raise Exception()
     os.makedirs(model_dir)
     
     train_A_dir = './data/target/train_conversion'

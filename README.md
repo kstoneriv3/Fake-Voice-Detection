@@ -5,6 +5,14 @@ The original code for [Cyclic GAN](https://github.com/leimao/Voice_Converter_Cyc
 
 Environment: ubuntu 18.04, Python 3.6
 
+## FOR LEONHARD CLUSTER
+
+run the following at .../Fake-Voice-Detection/
+```bash
+source ./set_env_leonhard.sh
+bsub -W 4:00 -R "rusage[ngpus_excl_p=1,mem=16000]" source ./run_all_leonhard.sh
+```
+
 ## Introduction
 
 

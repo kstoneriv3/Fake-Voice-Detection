@@ -3,6 +3,7 @@
 *.ipynb
 *.ipynb_checkpoints
 *.Rhistory
+*.pyc
 __pycache__/
 model/
 log/
@@ -10,4 +11,4 @@ data/
 data_manual/
 tmp/
 out/
-
+test.py
