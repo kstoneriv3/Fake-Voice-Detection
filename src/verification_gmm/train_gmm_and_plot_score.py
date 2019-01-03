@@ -1,6 +1,8 @@
 import numpy as np
 import librosa
 from sklearn.mixture import GaussianMixture
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pickle
 import argparse
@@ -58,9 +60,9 @@ if __name__ == '__main__':
         os.makedirs(model_dir)
 
     #load data
-    print('loading data ...')
+    print('loading data ... ', end='')
     train_data, test_data = load_datasets()
-    print('is finished.')
+    print('Done.')
     
     ##############################################
     # train gmm and plot for 2 cases:
@@ -74,14 +76,14 @@ if __name__ == '__main__':
         if os.path.exists(model_path):
             gmm = pickle.load(open( model_path, "rb" ))
         else:
-            print('training GMM models for {} case ...'.format(case))
+            print('training GMM models for {} case ... '.format(case), end='')
             gmm = {}
             gmm['target'] = GaussianMixture(n_components=128,\
                                             covariance_type='diag').fit(np.concatenate(train_data['Verif_{}'.format(case)]))
             gmm['ubg']    = GaussianMixture(n_components=2048,\
                                             covariance_type='diag').fit(np.concatenate(train_data['ubg']))
             pickle.dump(gmm, open( model_path, "wb" ), protocol=pickle.HIGHEST_PROTOCOL)
-            print('is finished')
+            print('Done.')
             
         def get_LR(samples):
             return + gmm['target'].score_samples(samples) - gmm['ubg'].score_samples(samples)
@@ -90,11 +92,11 @@ if __name__ == '__main__':
         
         # plot score for small clip (2~10 sec)
         i=0
-        plt.hist(get_LR(test_data['test'][i]), alpha=0.5, bins=50, density=True,range=[-50,50])
-        plt.hist(get_LR(test_data['ubg_test'][i]), alpha=0.5, bins=50, density=True,range=[-50,50])
-        plt.hist(get_LR(test_data['fake'][i]), alpha=0.5, bins=50, density=True,range=[-50,50])
+        plt.hist(get_LR(test_data['test'][i]), alpha=0.5, bins=50, normed=True,range=[-50,50])
+        plt.hist(get_LR(test_data['ubg_test'][i]), alpha=0.5, bins=50, normed=True,range=[-50,50])
+        plt.hist(get_LR(test_data['fake'][i]), alpha=0.5, bins=50, normed=True,range=[-50,50])
         plt.legend(['test','universal background', 'fake'])
-        plt.savefig('./out/score_for_one_small_clip_({}_data_for_VC_and_Verif).png'.format(case))
+        plt.savefig('./out/score_for_one_small_clip_({}_data_for_VC_and_Verif).eps'.format(case), format='eps', dpi=1000)
         
         # print mean for each test dataset
         print({name: np.mean([get_LR(data).mean() for data in test_data[name]])
@@ -105,15 +107,15 @@ if __name__ == '__main__':
         scores = {name: np.concatenate([get_LR(data) for data in test_data[name]])
             for name in names} 
         for name in names:
-            plt.hist(scores[name], alpha=0.5, bins=50, density=True,range=[-50,50])
+            plt.hist(scores[name], alpha=0.5, bins=50, normed=True,range=[-50,50])
         plt.legend(['test','universal background', 'fake','train_conversion','validation_verification'])
-        plt.savefig('./out/score_for_whole_({}_data_for_VC_and_Verif).png'.format(case))
+        plt.savefig('./out/score_for_whole_({}_data_for_VC_and_Verif).eps'.format(case), format='eps', dpi=1000)
         
         # plot average score per small clip for whole data
         score_means = {name: np.array([get_LR(data).mean() for data in test_data[name]])
             for name in names}
         for name in names:
-            plt.hist(score_means[name], alpha=0.5, bins=50, density=True,range=[-20,20])
+            plt.hist(score_means[name], alpha=0.5, bins=50, normed=True,range=[-20,20])
         plt.legend(['test','universal background', 'fake','train_conversion','validation_verification'])
         plt.savefig('./out/average_score_per_small_clip_for_whole_({}_data_for_VC_and_Verif).png'.format(case))
         
