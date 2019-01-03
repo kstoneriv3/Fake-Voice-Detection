@@ -5,9 +5,9 @@ The original code for [Cyclic GAN](https://github.com/leimao/Voice_Converter_Cyc
 
 Environment: ubuntu 18.04, Python 3.6
 
-## FOR LEONHARD CLUSTER
+## (FOR LEONHARD CLUSTER)
 
-run the following at .../Fake-Voice-Detection/
+run the following at `.../Fake-Voice-Detection/`
 ```bash
 source ./set_env_leonhard.sh
 bsub -W 4:00 -R "rusage[ngpus_excl_p=1,mem=16000]" source ./run_all_leonhard.sh
@@ -38,10 +38,13 @@ bsub -W 4:00 -R "rusage[ngpus_excl_p=1,mem=16000]" source ./run_all_leonhard.sh
 │   ├──source
 │   │   └─ train_conversion
 │   └──ubg
-│   │   ├─ train_conversion
-│   │   ├─ train_verification
-│   │   └─ test
-├── figures
+│       ├─ train_verification
+│       └─ test
+├──out
+│   ├──plot
+│   ├──scores
+├── set_env_leonhard.sh
+├── run_all_leonhard.sh
 ├── README.md
 ```
 
@@ -58,11 +61,7 @@ sudo apt-get ffmpeg
 ```
 
 ## Usage
-
-### Before Running Code
-```bash
-$ cd path/Fake-Voice-Detection/
-```
+run the following at `.../Fake-Voice-Detection/`
 
 ### Download Dataset
 Download and unzip datasets and pretrained models.
@@ -74,4 +73,19 @@ $ python ./src/download.py
 ### Split the raw speech
 ```bash
 $ python ./src/split_raw_speech.py
+```
+
+### Train the Voice Conversion Model
+```bash
+$ python ./src/conversion/train.py --model_dir='./model/conversion/pretrained'
+```
+
+### Convert the source speaker's voice
+```bash
+$ python ./src/conversion/convert.py --model_dir='./model/conversion/pretrained'
+```
+
+### Train the GMM based verification system and Plot the scores
+```bash
+$ python ./src/verification_gmm/train_and_plot.py
 ```

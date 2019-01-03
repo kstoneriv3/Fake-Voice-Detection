@@ -8,12 +8,11 @@ run_in_python2(){
 # converted voice is outputted to './data/fake/' 
 # in case of python2, use 'run_in_python2' instead of 'python'
 # run_in_python2 ./src/conversion/train.py --model_dir='./model/conversion/pretrained' --model_name='pretrained'
-python ./src/conversion/train.py --model_dir='./model/conversion/pretrained' --model_name='pretrained'
-python ./src/conversion/convert.py --model_dir='./model/conversion/pretrained' --model_name='pretrained' 
+python ./src/conversion/train.py --model_dir='./model/conversion/pretrained'
+python ./src/conversion/convert.py --model_dir='./model/conversion/pretrained'
 
 # train GMM-UBG verification model for two cases: 
 # 1. disjoint data for VC and Verification 
 # 2. shared data for VC and Verification 
 # then plot the score (test statistics, which is log likelihood ratio) 
-# model is saved at './model/verification_gmm/' 
-python ./src/verification_gmm/train_gmm_and_plot_score.py
+python ./src/verification_gmm/train_and_plot.py --model_dir='./model/verification_gmm/pretrained'

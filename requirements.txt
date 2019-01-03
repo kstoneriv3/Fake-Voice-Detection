@@ -6,3 +6,4 @@ pyworld==0.2.8
 requests==2.20.0
 scikit-learn==0.20.0 
 tensorflow==1.11.0
+matplotlib==2.2.2     

@@ -59,9 +59,9 @@ if __name__ == '__main__':
     print('splitting raw speech data ...')
     split_file(filepathes[0], output_dir='./data/target/train_conversion')
         
-    for filepath in filepathes[1:4]:
+    for filepath in filepathes[4:7]:
         split_file(filepath, output_dir='./data/target/train_verification')
         
-    for filepath in filepathes[4:7]:
+    for filepath in filepathes[1:4]:
         split_file(filepath, output_dir='./data/target/test')
     print('is finished.')
