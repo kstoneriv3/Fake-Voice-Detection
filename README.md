@@ -15,7 +15,7 @@ Environment: ubuntu 18.04, Python 3.6
 | 200005 | link: [./converted_samples/200005_real.wav](./converted_samples/200005_real.wav) | link: [./converted_samples/200005_fake.wav](./converted_samples/200005_fake.wav) |
 
 ## plot of Score* for GMM-based verification system
-* "score" is the log likelihood ratio of the GMM-Speakermodel and the GMM-UBG model.
+\* "score" is the log likelihood ratio of the GMM-Speakermodel and the GMM-UBG model.
 ![](<./out/plot/average_score_per_small_clip_for_whole_%28disjoint_data_for_VC_and_Verif%29.png>)
 - test ... Obama's voice which is not used for training neither conversion system or verificationsystem
 - universal background ... voice from a lot of people
