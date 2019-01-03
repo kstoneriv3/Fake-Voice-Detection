@@ -92,9 +92,10 @@ if __name__ == '__main__':
         
         # plot score for small clip (2~10 sec)
         i=0
-        plt.hist(get_LR(test_data['test'][i]), alpha=0.5, bins=50, normed=True,range=[-50,50])
-        plt.hist(get_LR(test_data['ubg_test'][i]), alpha=0.5, bins=50, normed=True,range=[-50,50])
-        plt.hist(get_LR(test_data['fake'][i]), alpha=0.5, bins=50, normed=True,range=[-50,50])
+        one_clip_scores = {name:get_LR(test_data[name][i]) for name in ['test','ubg_test','fake']}
+       
+        for name in one_clip_scores.keys():
+            plt.hist(one_clip_scores[name], alpha=0.5, bins=50, normed=True,range=[-50,50])
         plt.legend(['test','universal background', 'fake'])
         plt.savefig('./out/score_for_one_small_clip_({}_data_for_VC_and_Verif).eps'.format(case), format='eps', dpi=1000)
         
@@ -117,6 +118,10 @@ if __name__ == '__main__':
         for name in names:
             plt.hist(score_means[name], alpha=0.5, bins=50, normed=True,range=[-20,20])
         plt.legend(['test','universal background', 'fake','train_conversion','validation_verification'])
-        plt.savefig('./out/average_score_per_small_clip_for_whole_({}_data_for_VC_and_Verif).png'.format(case))
-        
+        plt.savefig('./out/average_score_per_small_clip_for_whole_({}_data_for_VC_and_Verif).eps'.format(case), format='eps', dpi=1000)
+       
+        pickle.dump(one_clip_scores, open( './out/scores/one_clip_scores_({}_data_for_VC_and_Verif).p'.format(case), "wb" ), protocol=pickle.HIGHEST_PROTOCOL)
+        pickle.dump(scores, open( './out/scores/scores_({}_data_for_VC_and_Verif)'.format(case), "wb" ), protocol=pickle.HIGHEST_PROTOCOL)
+        pickle.dump(score_means, open( './out/scores/score_means_({}_data_for_VC_and_Verif).p'.format(case), "wb" ), protocol=pickle.HIGHEST_PROTOCOL)
+            
         
