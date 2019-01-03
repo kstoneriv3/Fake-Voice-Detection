@@ -107,7 +107,10 @@ if __name__ == '__main__':
         # plot from here
         # for plotting
         names = ['test','ubg_test','fake','train_Conv','validation_Verif']
+        if not os.path.exists('./out/plot/'):
+            os.makedirs('./out/plot/')
 
+        
         # plot score for small clip (2~10 sec)
         i=0
         one_clip_scores = {name:get_LR(test_data[name][i]) for name in ['test','ubg_test','fake']}

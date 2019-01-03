@@ -1,14 +1,14 @@
-*.wav
 *.zip
 *.ipynb
 *.ipynb_checkpoints
 *.Rhistory
 *.pyc
+!/converted_sampleis/
 __pycache__/
 model/
 log/
 data/
 data_manual/
 tmp/
-out/
+out/scores/
 test.py
