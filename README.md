@@ -13,6 +13,7 @@ Environment: ubuntu 18.04, Python 3.6
 | 200003 | link: [./converted_samples/200003_real.wav](./converted_samples/200003_real.wav) | link: [./converted_samples/200003_fake.wav](./converted_samples/200003_fake.wav) |
 | 200004 | link: [./converted_samples/200004_real.wav](./converted_samples/200004_real.wav) | link: [./converted_samples/200004_fake.wav](./converted_samples/200004_fake.wav) |
 | 200005 | link: [./converted_samples/200005_real.wav](./converted_samples/200005_real.wav) | link: [./converted_samples/200005_fake.wav](./converted_samples/200005_fake.wav) |
+\* depending on the browser, you cannot play the wav files on the browser. 
 
 ## plot of Score* for GMM-based verification system
 \* "score" is the log likelihood ratio of the GMM-Speakermodel and the GMM-UBG model.
