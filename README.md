@@ -83,7 +83,7 @@ pip install --user -r requirements.txt
 ```
 If librosa gives backend error, run following. (This is `module load ffmpeg` in HPC cluster in ETH.)
 ```bash
-apt-get ffmpeg
+apt-get install ffmpeg
 ```
 
 ## Usage
