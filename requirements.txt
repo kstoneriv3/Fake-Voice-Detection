@@ -1,9 +1,9 @@
 googledrivedownloader==0.3
 librosa==0.6.2     
-numpy==1.14.3
+#numpy==1.14.3
 progressbar2==3.37.1
 pyworld==0.2.8
 requests==2.20.0
-scikit-learn==0.20.0 
-tensorflow==1.11.0
-matplotlib==2.2.2     
+#scikit-learn==0.20.0 
+#tensorflow==1.11.0
+#matplotlib==2.2.2     
