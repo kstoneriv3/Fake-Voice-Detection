@@ -41,13 +41,19 @@ bsub -W 4:00 -R "rusage[ngpus_excl_p=1,mem=16000]" source ./run_all_leonhard.sh
 ```
 .
 ├──src
-│   ├── convert.py
+│   ├──conversion
+│   │   ├─ model.py
+│   │   ├─ module.py
+│   │   ├─ preprocess.py
+│   │   ├─ train.py
+│   │   └─ utils.py
+│   ├──verification_gmm
+│   │   └─ train_and_plot.py
+│   ├── ?
+│   │   ├─ ?
+│   │   └─ ?
 │   ├── download.py
-│   ├── model.py
-│   ├── module.py
-│   ├── preprocess.py
-│   ├── train.py
-│   └── utils.py
+│   └── split_normalize_raw_speech.py.py
 │
 ├──data
 │   ├──target_raw (Obama)
@@ -62,7 +68,7 @@ bsub -W 4:00 -R "rusage[ngpus_excl_p=1,mem=16000]" source ./run_all_leonhard.sh
 │       └─ test
 ├──out
 │   ├──plot
-│   ├──scores
+│   └──scores
 ├── set_env_leonhard.sh
 ├── run_all_leonhard.sh
 ├── README.md
@@ -70,14 +76,14 @@ bsub -W 4:00 -R "rusage[ngpus_excl_p=1,mem=16000]" source ./run_all_leonhard.sh
 
 
 ## Requirments
-Install all the requirements.
+Install all the requirements (except numpy, matplotlib, scikitlearn, tensorflow).
 
 ```bash
 pip install --user -r requirements.txt
 ```
 If librosa gives backend error, run following. (This is `module load ffmpeg` in HPC cluster in ETH.)
 ```bash
-sudo apt-get ffmpeg
+apt-get ffmpeg
 ```
 
 ## Usage
@@ -92,7 +98,7 @@ $ python ./src/download.py
 
 ### Split the raw speech
 ```bash
-$ python ./src/split_raw_speech.py
+$ python ./src/split_normalize_raw_speech.py
 ```
 
 ### Train the Voice Conversion Model
