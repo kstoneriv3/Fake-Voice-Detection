@@ -119,7 +119,7 @@ if __name__ == '__main__':
         for name in one_clip_scores.keys():
             plt.hist(one_clip_scores[name], alpha=0.5, bins=50, density=True,range=[-50,50])
         plt.legend(['test','universal background', 'fake'])
-        #plt.savefig('./out/plot/score_for_one_small_clip_({}_data_for_VC_and_Verif).png'.format(case), dpi=1000)
+        plt.savefig('./out/plot/score_for_one_small_clip_({}_data_for_VC_and_Verif).png'.format(case), dpi=1000)
         
         # print mean for each test dataset
         print('average scores of {} data for VC and Verif'.format(case))
@@ -134,7 +134,7 @@ if __name__ == '__main__':
         for name in names:
             plt.hist(scores[name], alpha=0.5, bins=50, density=True,range=[-50,50])
         plt.legend(['test','universal background', 'fake','train_conversion','validation_verification'])
-        #plt.savefig('./out/plot/score_for_whole_({}_data_for_VC_and_Verif).png'.format(case), dpi=1000)
+        plt.savefig('./out/plot/score_for_whole_({}_data_for_VC_and_Verif).png'.format(case), dpi=1000)
         
         # plot average score per small clip for whole data
         score_means = {name: np.array([get_LR(data).mean() for data in test_data[name]])
@@ -144,24 +144,25 @@ if __name__ == '__main__':
         for name in names:
             plt.hist(score_means[name], alpha=0.5, bins=50, density=True,range=[-20,20])
         plt.legend(['test','universal background', 'fake','train_conversion','validation_verification'])
-        #plt.savefig('./out/plot/average_score_per_small_clip_for_whole_({}_data_for_VC_and_Verif).png'.format(case), dpi=1000)
+        plt.savefig('./out/plot/average_score_per_small_clip_for_whole_({}_data_for_VC_and_Verif).png'.format(case), dpi=1000)
        
         if not os.path.exists('./out/scores/'):
             os.makedirs('./out/scores/')
 
+        # save statistics for explatory analysis
         pickle.dump(one_clip_scores, 
-                    open( './out/score/one_clip_scores_({}_data_for_VC_and_Verif).p'.format(case), "wb" ), 
+                    open( './out/scores/one_clip_scores_({}_data_for_VC_and_Verif).p'.format(case), "wb" ), 
                     protocol=pickle.HIGHEST_PROTOCOL)
         pickle.dump(scores, 
-                    open( './out/score/scores_({}_data_for_VC_and_Verif).p'.format(case), "wb" ), 
+                    open( './out/scores/scores_({}_data_for_VC_and_Verif).p'.format(case), "wb" ), 
                     protocol=pickle.HIGHEST_PROTOCOL)
         pickle.dump(score_means, 
-                    open( './out/score/score_means_({}_data_for_VC_and_Verif).p'.format(case), "wb" ), 
+                    open( './out/scores/score_means_({}_data_for_VC_and_Verif).p'.format(case), "wb" ), 
                     protocol=pickle.HIGHEST_PROTOCOL)
 
     # just plot the histgram used in report
     for case in ['disjoint']:
-        score_means = pickle.load(open( './out/score/score_means_({}_data_for_VC_and_Verif).p'.format(case), 'rb') )
+        score_means = pickle.load(open( './out/scores/score_means_({}_data_for_VC_and_Verif).p'.format(case), 'rb') )
         plt.figure(figsize=[10,6])
         i = 1
         for name in ['test','fake','ubg_test']:
