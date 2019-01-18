@@ -47,9 +47,9 @@ bsub -W 4:00 -R "rusage[ngpus_excl_p=1,mem=16000]" source ./run_all_leonhard.sh
 │   │   └─ utils.py
 │   ├──verification_gmm
 │   │   └─ train_and_plot.py
-│   ├── ?
-│   │   ├─ ?
-│   │   └─ ?
+│   ├── verification_vae
+│   │   ├─ cvae_verification.py
+│   │   └─ cvae_keras.py
 │   ├── download.py
 │   └── split_normalize_raw_speech.py.py
 │
@@ -112,4 +112,9 @@ $ python ./src/conversion/convert.py --model_dir='./model/conversion/pretrained'
 ### Train the GMM based verification system and Plot the scores
 ```bash
 $ python ./src/verification_gmm/train_and_plot.py
+```
+### Train the CVAE based verification system and Plot the scores
+
+```bash
+$ python ./src/verification_cvae/cvae_verification.py
 ```
