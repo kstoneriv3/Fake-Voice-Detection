@@ -13,6 +13,7 @@ Environment: ubuntu 18.04, Python 3.6
 | 200003 | link: [./converted_samples/200003_real.wav](./converted_samples/200003_real.wav) | link: [./converted_samples/200003_fake.wav](./converted_samples/200003_fake.wav) |
 | 200004 | link: [./converted_samples/200004_real.wav](./converted_samples/200004_real.wav) | link: [./converted_samples/200004_fake.wav](./converted_samples/200004_fake.wav) |
 | 200005 | link: [./converted_samples/200005_real.wav](./converted_samples/200005_real.wav) | link: [./converted_samples/200005_fake.wav](./converted_samples/200005_fake.wav) |
+
 \* depending on the browser, you cannot play the wav files on the browser. 
 
 ## plot of Score* for GMM-based verification system
@@ -46,6 +47,7 @@ bsub -W 4:00 -R "rusage[ngpus_excl_p=1,mem=16000]" source ./run_all_leonhard.sh
 │   │   ├─ train.py
 │   │   └─ utils.py
 │   ├──verification_gmm
+│   │   ├─ compute_auc.py
 │   │   └─ train_and_plot.py
 │   ├── verification_vae
 │   │   ├─ cvae_verification.py
@@ -87,34 +89,47 @@ apt-get install ffmpeg
 ## Usage
 run the following at `.../Fake-Voice-Detection/`
 
-### Download Dataset
+### Download Dataset and preprocess
 Download and unzip datasets and pretrained models.
 
 ```bash
 $ python ./src/download.py
 ```
 
-### Split the raw speech
+Split the raw speech
 ```bash
 $ python ./src/split_normalize_raw_speech.py
 ```
 
-### Train the Voice Conversion Model
+### CycleGAN Voice Conversion
+Train the Voice Conversion Model
 ```bash
 $ python ./src/conversion/train.py --model_dir='./model/conversion/pretrained'
 ```
 
-### Convert the source speaker's voice
+Convert the source speaker's voice
 ```bash
 $ python ./src/conversion/convert.py --model_dir='./model/conversion/pretrained'
 ```
 
-### Train the GMM based verification system and Plot the scores
+### GMM-UBG verification
+Train the GMM based verification system and Plot the scores
 ```bash
 $ python ./src/verification_gmm/train_and_plot.py
 ```
-### Train the CVAE based verification system and Plot the scores
+
+compute AUC converted samples of every 50 epoch
+```bash
+$ python ./src/verification_gmm/compute_auc.py
+```
+
+
+### Convolutional VAE
+
+Train the CVAE based verification system and Plot the scores
 
 ```bash
 $ python ./src/verification_cvae/cvae_verification.py
 ```
+
+

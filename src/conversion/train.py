@@ -138,7 +138,7 @@ def train(train_A_dir, train_B_dir, model_dir, model_name, random_seed, validati
              )
 
         if validation_A_dir is not None:
-            if epoch % 100 == 0:
+            if epoch % 50 == 0:
                 print('Generating Validation Data B from A...')
                 for file in os.listdir(validation_A_dir)[:10]:
                     filepath = os.path.join(validation_A_dir, file)
@@ -166,9 +166,9 @@ def train(train_A_dir, train_B_dir, model_dir, model_name, random_seed, validati
                                              sampling_rate)
 
         if validation_B_dir is not None:
-            if epoch % 100 == 0:
+            if epoch % 50 == 0:
                 print('Generating Validation Data A from B...')
-                for file in os.listdir(validation_B_dir)[:10]:
+                for file in os.listdir(validation_B_dir):
                     filepath = os.path.join(validation_B_dir, file)
                     wav, _ = librosa.load(filepath, sr = sampling_rate, mono = True)
                     wav = wav_padding(wav = wav, sr = sampling_rate, frame_period = frame_period, multiple = 4)
