@@ -117,9 +117,9 @@ if __name__ == '__main__':
         
         # plot score for small clip (2~10 sec)
         i=0
-        plt.hist([get_LR(data) for data in test_data['test']], alpha=0.5, bins=50, density=True)
-        plt.hist([get_LR(data) for data in test_data['ubg_test']], alpha=0.5, bins=50, density=True)
-        plt.hist([get_LR(data) for data in test_data['fake']], alpha=0.5, bins=50, density=True)
+        plt.hist([get_LR(data) for data in test_data['test']], alpha=0.5, bins=50, density=True,range=[-50,50])
+        plt.hist([get_LR(data) for data in test_data['ubg_test']], alpha=0.5, bins=50, density=True,range=[-50,50])
+        plt.hist([get_LR(data) for data in test_data['fake']], alpha=0.5, bins=50, density=True,range=[-50,50])
         plt.legend(['test','universal background', 'fake'])
         
         plt.savefig('./out/score_for_one_small_clip_({}_data_for_VC_and_Verif).png'.format(case))
@@ -144,7 +144,7 @@ if __name__ == '__main__':
         score_means = {name: np.array([get_LR(data).mean() for data in test_data[name]])
             for name in names}
         for name in names:
-            plt.hist(score_means[name], alpha=0.5, bins=50, density=True)
+            plt.hist(score_means[name], alpha=0.5, bins=50, density=True,range=[-20,20])
         plt.legend(['test','universal background', 'fake','train_conversion','validation_verification'])
         plt.savefig('./out/average_score_per_small_clip_for_whole_({}_data_for_VC_and_Verif).png'.format(case))
         

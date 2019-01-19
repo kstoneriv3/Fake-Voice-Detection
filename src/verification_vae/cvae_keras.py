@@ -109,7 +109,6 @@ def cvae_training(x_train):
     latent_inputs = Input(shape=(latent_dim,), name='z_sampling')
     x = Dense(shape[1] * shape[2]*shape[3], activation='tanh')(latent_inputs)
     x = Reshape((shape[1], shape[2], shape[3]))(x)
-    
     filters//=2;
     for i in range(2):
         x = Conv2DTranspose(filters=filters,
@@ -119,9 +118,11 @@ def cvae_training(x_train):
                             padding='same')(x)
         filters //= 2
         
-    outputs=Conv2DTranspose(filters=1,kernel_size=(1,input_shape[1]),strides=1,activation='tanh')(x)
-    
-    
+    outputs=Conv2DTranspose(filters=2,kernel_size=(1,input_shape[1]),strides=1,activation='tanh')(x)
+    #x_log_var=Conv2DTranspose(filters=1,kernel_size=(1,input_shape[1]),strides=1,activation='tanh')(x);  
+    #x_log_var=Flatten()(x_log_var)
+
+   # x_log_var=1.0
 #    outputs = Conv2DTranspose(filters=1,
 #                              kernel_size=(kernel_size,1),
 #                              activation='tanh',
@@ -136,8 +137,9 @@ def cvae_training(x_train):
     # instantiate VAE model
     outputs = decoder(encoder(inputs)[2])
     vae = Model(inputs, outputs, name='vae')
-    reconstruction_loss = mse(K.flatten(inputs), K.flatten(outputs))
-    reconstruction_loss *= input_shape[0] * input_shape[1]
+    reconstruction_loss = K.sum((K.flatten(inputs)-K.flatten(outputs[:,:,:,0]))/(K.exp(K.flatten(outputs[:,:,:,1])))+K.flatten(outputs[:,:,:,1]))
+    #reconstruction_loss *= input_shape[0] * input_shape[1]
+    #reconstruction_loss=K.binary_crossentropy(x, x_decoded_mean)
     kl_loss = 1 + z_log_var - K.square(z_mean) - K.exp(z_log_var)
     kl_loss = K.sum(kl_loss, axis=-1)
     kl_loss *= -0.5
