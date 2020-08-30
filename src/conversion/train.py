@@ -81,9 +81,18 @@ def train(train_A_dir, train_B_dir, model_dir, model_name, random_seed, validati
           (time_elapsed // 3600, (time_elapsed % 3600 // 60), (time_elapsed % 60 // 1))\
          )
 
+    loadEpoch = 0
+
     model = CycleGAN(num_features = num_mcep)
 
-    for epoch in range(num_epochs):
+    if os.path.exists(model_dir):
+        loadEpoch = model.loadEpoch(model_dir)
+    print('Load Epoch:', loadEpoch)
+    if loadEpoch > 0:
+        loadEpoch += 1
+        model.loadfromDir(model_dir)
+
+    for epoch in range(loadEpoch, num_epochs):
         print('Epoch: %d' % epoch)
         
         if epoch > 60:
@@ -193,14 +202,14 @@ def train(train_A_dir, train_B_dir, model_dir, model_name, random_seed, validati
         if epoch % 100 == 0:
             #if not os.path.exists( model_dir+"_{}epc".format(epoch) ):
             #    os.makedirs( model_dir+"_{}epc".format(epoch) )
-            model.save(directory = model_dir, filename = model_name)
+            model.save(directory = model_dir, filename = model_name, epoch = epoch)
 
 
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description = 'Convert voices using pre-trained CycleGAN model.')
 
-    model_dir_default = './model/conversion/pretrained'
+    model_dir_default = './model2/conversion/pretrained'
     model_name_default = 'pretrained'
 
     parser.add_argument('--model_dir', type = str, help = 'Directory for the pre-trained model.', default = model_dir_default)
@@ -213,8 +222,10 @@ if __name__ == '__main__':
     
     if os.path.exists(model_dir):
         print('model directory "{}" alreaddy exists!\nif you want to train another model, try another model directory.'.format(model_dir))
-        raise Exception()
-    os.makedirs(model_dir)
+        #if os.path.isfile(os.path.join(model_dir, 'checkpoint')):
+        #raise Exception()
+    else:
+        os.makedirs(model_dir)
     
     train_A_dir = './data/target/train_conversion'
     train_B_dir = './data/source/train_conversion'

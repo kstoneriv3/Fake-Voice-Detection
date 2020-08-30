@@ -13,7 +13,8 @@ def conversion(model_dir, model_name, data_dir, conversion_direction, output_dir
 
     model = CycleGAN(num_features = num_features, mode = 'test')
 
-    model.load(filepath = os.path.join(model_dir, model_name+'.ckpt'))
+    #model.load(filepath = os.path.join(model_dir, model_name+'.ckpt'))
+    model.loadfromDir(model_dir)
 
     mcep_normalization_params = np.load(os.path.join(model_dir, 'mcep_normalization.npz'))
     mcep_mean_A = mcep_normalization_params['mean_A']
