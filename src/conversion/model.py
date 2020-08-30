@@ -177,18 +177,30 @@ class CycleGAN(object):
         return generation
 
 
-    def save(self, directory, filename):
+    def save(self, directory, filename, epoch):
 
         if not os.path.exists(directory):
             os.makedirs(directory)
-        self.saver.save(self.sess, os.path.join(directory, filename))
+        global_step_epoch = tf.Variable(epoch, name='global_step', trainable=False)
+        self.sess.run(global_step_epoch.initializer)
+        self.saver.save(self.sess, os.path.join(directory, filename), global_step=global_step_epoch)
         
         return os.path.join(directory, filename)
 
     def load(self, filepath):
 
         self.saver.restore(self.sess, filepath)
+    
+    def loadfromDir(self, modeldir):
+        ckpt = tf.train.get_checkpoint_state(modeldir)
+        print('loadfromDir:', ckpt.model_checkpoint_path)
+        self.saver.restore(self.sess, ckpt.model_checkpoint_path)
 
+    def loadEpoch(self, modeldir):
+        ckpt = tf.train.get_checkpoint_state(modeldir)
+        if ckpt is None:
+            return 0
+        return int(os.path.basename(ckpt.model_checkpoint_path).split('-')[1])
 
     def summary(self):
 
